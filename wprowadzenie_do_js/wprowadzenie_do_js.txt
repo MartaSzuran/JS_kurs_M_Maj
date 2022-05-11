@@ -1,0 +1,59 @@
+gdy piszę skrypt w html - umieszczam go w body na samym końcu
+
+wtedy przeglądarka czytają od góry do dołu nasz kod, wykona skrypt 
+
+dobrze tyrzymać w osobnym pliku w <head>
+
+
+dobra praktyka, trzymać skrypty js w osobnym pliku.
+
+
+dostanie się do konsoli w .js:
+clg - clonsollog - dlaczego nie działa ?? 
+
+ZMIENNE:
+const - stała, nie może być ich wiele
+
+jak wpisujemy z "" to string, jak bez to interpretuje zmienną jako liczbę 
+
+let age = 23 <- da się nadpisać
+
+można zrobić po prostu 
+let color i nic nie przypisać ... 
+
+
+dlaczego nie używać var ? 
+- stary zapis
+- z var możemy tworzyć dwie zmienne o takiej samej nazwie
+- problem z zakresami
+
+AKTUALNIE KORZYSTAMY TYLKO Z CONST I LET
+----------------------
+NAZYWANIE ZMIENNYCH W JS
+- zmienne nazywamy po ang
+- jest językiem casesensitive
+- z dużej litery ustawia się klasy
+- nie zaczynamy od liczby / cyfry
+- nie może być kropek, myślników
+
+f.e.
+const first_name = "Tomek";
+const firstName = "Tomek"; <- lepiej
+
+- są słówka zarezerwowane (naturalnie nie będziemy ich używać)
+reserved keywords java <- net
+
+--------------------
+TEMPLATE STRING
+stray sposób:
+console.log('Cześć, jestem' + name_1 + " i moje ulubione danie to" + favMeal);
+
+concatenacja - stary 
+
+The method is called string interpolation. ${...}
+
+(`Cześć, jestem ${name_1} i moje ulubione danie to ${favMeal}`);  
+REMEBER THIS IS WITH `(CLOSE TO ~`) NOT WITH '!!! 
+
+
+

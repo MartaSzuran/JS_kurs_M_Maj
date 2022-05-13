@@ -1,0 +1,64 @@
+let v = '123';
+
+console.log(v);
+
+console.log(typeof v); <- zwraca samo : string
+
+`` <- grawisy
+ich powinniśmy używać, jak chcemy sobie dodać super stringa, czyli używamy konstrukcji:
+`${}`
+
+metody:
+
+https://developer.mozilla.org/pl/docs/Web/JavaScript/Reference/Global_Objects/String
+
+
+
+const username = 'maciej';
+const newUsername = username.charAt(0).toUpperCase() + username.slice(1);
+console.log(username.slice(1));
+console.log(newUsername);
+
+
+haha dokleja się metody!!!!
+
+--------
+NUMBERS :D
+
+const num2 = '45'
+console.log(num2 *1);  <- dostanę liczbę :D 
+
+parseInt <- zmiana na numer
+toFixed <- zaokrągla
+
+----------------
+boolean
+
+przydatność w if 
+
+co zwraca false:
+if(false)
+if(undefined)
+if(null)
+if(0)
+if(NaN)
+if('')
+if(2-2)
+
+-------------
+NULL i Undefined
+nic czyli czegoś nie ma
+
+kiedy undefined:
+nie ma zdefiniowanej wartości
+
+kiedy null:
+my przypisujemy null do jakiejś zmiennej
+
+-------------------
+typy złożone
+
+tablica, funkcja i obiekt.
+
+const colors = [123, 'dsagag', true,];
+

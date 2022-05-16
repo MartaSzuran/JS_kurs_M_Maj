@@ -1,0 +1,30 @@
+IF ELSE 
+
+SWITCH
+
+jak chce z niego skorzystać wejść na mdm i popatrzeć na dokumantację
+używa się go niewiarygodnie rzadko
+
+operator warunkowy : 
+możemy zapisać w jednej linijce niż w pięciu, 
+używa się, gdy możemy zastąpić super prostego if'a - ponieważ może być w 
+innym wypadku nineczytalny
+
+const x = 10
+
+if (x > 20) {
+  console.log(`${x} > 20`)
+} else {
+  console.log(`${x} < 20`)
+}
+
+jest równe:
+const newX = x > 20 ? (`${x} > 20`): (`${x} < 20`)
+
+jeżeli ten warunek jest prawdziwy : x > 20
+odpal : (`${x} > 20`)
+gdy nie to odpal : (`${x} < 20`)
+
+--------------------------------------
+
+

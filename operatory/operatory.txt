@@ -1,0 +1,43 @@
+x++ - inkrementacja :) 
+
+console.log(`Inkrementacja: ${x}`) <- pamiętać to jest w ` nie w '
+
+x-- 
+
+% - modulo
+
+-------
+operatory przypisania
+
+x = x + y  ==  x += y  <- można skrócić zapis z każdnym operatorem 
+
+------
+
+operatowy porównania
+
+==	<- porównuje same dane
+===  <- porównuje nie tylko dane, ale również typ
+
+console.log(10 == '10')
+console.log(10 === '10')
+
+!=
+!==
+>
+<
+>=
+<=
+
+----------------
+operatory logiczne
+&& and
+|| or	<-zwaraca false tylko wtedy gdy wszystkie warunki są fałszywe 
+! denial
+
+5 > 0 <- pięć jest większe od zera
+
+
+haha
+    let number = '10';
+    const newNumber = number += 10
+wynik to 1010 :D

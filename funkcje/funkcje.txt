@@ -1,0 +1,275 @@
+deklaracja funcji 
+
+
+function test() {
+  console.log('cześć')
+}
+
+test()
+
+FUNKCJA PODLEGA HOISTINGOWI (jak var)
+Hoisting is a JavaScript mechanism where variables and function declarations 
+are moved to the top of their scope before code execution. Inevitably, this 
+means that no matter where functions and variables are declared, they are
+moved to the top of their scope regardless of whether their scope is global 
+or local.
+np. to też zadziała, ponieważ wszystkie funkcje są przenoszone na samą g
+órę kodu zawsze
+
+test()
+
+function test() {
+  console.log('cześć')
+}
+
+
+rozwiązanie problemu:
+
+// wyrażenie funkcyjne
+const helloWorld = function () {
+  console.log('cześć 123')
+}
+
+helloWorld()
+
+takie zapis wyrzuci nam błąd:
+
+helloWorld()
+
+const helloWorld = function () {
+  console.log('cześć 123')
+}
+
+-----------
+Funkcja z argumentami
+
+parametr - podajemy podczas tworzenia funkcji
+argument - podajemy podczas wywoływania funcji
+
+return kończy dzialanie funkcji
+
+function add3(x, y) {
+  if (x < y) return
+
+  console.log(x + y)
+}
+
+//nic się nie dzieje ponieważ gdy x jest mniejszy od y wychodzimy z funkcji
+add3(10, 15)
+
+// wyloguje 25
+add3(15, 10)
+
+function twoparams(x, y) {
+    console.log(`Cześć mam na imię ${x} mam ${y} lat.`)
+}
+
+twoparams('Jola', 45)
+-----------
+FUNKCJA ANONIMOWA
+
+dodaliśmy do htmla <h1>funkcje</h1>
+
+funkcja nasłuchuje na click
+const heading = document.querySelector('h1')
+
+heading.addEventListener('click', function () {
+  console.log('Kliknięto mnie!');
+})
+
+żeby mi to zadziałało musiałam przenieść <script> na dół body w html .... <- whyy ?!!
+
+minusy funkcji anonimowych:
+- nie wiemy co robią, np nasłuchuje na clicka, ale musimy poszukać co robi po kliknięciu, 
+przenosi na inny link, wydaje dźwięk ? 
+- żeby mieć dostęp do takiej samej funkcji gdzieś w kodzie, musielibyśmy napisać ją na nowo
+
+
+ewentualnie używa się w forEachu
+
+lepszy kod:
+const heading = document.querySelector('h1')
+
+function test() {
+  console.log('Kliknięto mnie!');
+}
+
+heading.addEventListener('click', test)
+
+----------------------------
+FUNKCJA STRZAŁKOWA od 2015
+
+// funkcja strzalkowa budowa
+const arrowFunction = () => {
+
+}
+
+//normalna funkcja
+function name1(user_name) {
+  console.log(`Mam na imię ${user_name}`)
+}
+
+name1('Klaudia')
+
+// funkcja strzalkowa
+const name2 = (user_name) => {
+  console.log(`Mam na imię ${user_name}`)
+}
+
+name2('Lisa')
+
+// funkcja strzalkowa może być zapisana bez ()!
+const name2 = user_name => {
+  console.log(`Mam na imię ${user_name}`)
+}
+
+-------
+funkcję, ktora zwraca tylko jedną rzecz możemy zapisać:
+
+const name3 = name => console.log(`Mam na imię ${name}`)
+
+name3('Roman')
+ 
+FUNKCJA STRZAŁKOWA, z dwoma parametrami 
+
+const name4 = (name, age) => console.log(name, age)
+
+przykład:
+
+function add(num1, num2) {
+  return num1+num2
+}
+
+const add2 = (num1, num2) => num1+num2
+
+nie musimy dodawać return, ale jak chcemy to musimy to zapakować w {} np: {return num1+num2}
+
+gdy funkcja ma zwrócić wiele rzeczy, musimy użyć nawiasów, np:
+const add3 = (num1, num2) => {
+  console.log('czesc')
+  return num1+num2
+}
+
+const days = ['poniedziałek', 'wtorek', 'środa']
+const days2 = days.forEach(function (day) {
+  console.log(day)
+})
+
+console.log('----------')
+const days3 = days.forEach( day => console.log(day))  <cosnt days3 to jest wywołanie funckji strzałokwaej
+
+console.log(days3)
+
+
+------------------------
+domyśle argumenty funkcji
+const hello = (name = 'drogi użytkowniku') => console.log(`cześć ${name}, jak się masz?`)
+
+hello()
+hello('Klaudia')  <- nadpisze argument 
+
+const add = (x=5, y=25) => {console.log(x+y)}
+
+add()
+add(12)
+add(1,34)
+
+------------------------
+operator rest
+const numbers = (x, y, ...z) =>  {console.log(x, y, z)}
+
+numbers(13, 4332, 53, 321, 86, 324, 1, 7)
+
+pod parametrem z wyogowala mi się tablica, czyli możemy na niej wykonywać metody tablic
+const numbers = (x, y, ...z) =>  {
+  console.log(x, y, z)
+  console.log(z.map(el => el*2))
+}
+
+---------------------
+ZAKRESY
+
+obiekt window <- ma właściwość name (dlatego przekreśla)
+
+const name = 'Lisa'
+
+const test = () => {
+  const name = 'Tony'
+  console.log(`NAME w funckji - ${name}`)
+
+  const age = 23
+  console.log(age)
+}
+test()
+
+console.log(age)
+console.log(`NAME w funckji - ${name}`)
+
+chodzi o życie zmiennych w ciele funkcji i poza nią :) 
+
+ciekawostka:
+let food  <- pusta zmienna (puste pudełko)
+
+
+const name = 'Lisa'
+let food        
+
+const test = () => {
+  const name = 'Tony'
+  console.log(`NAME w funckji - ${name}`)
+
+  food = 'schabowy'
+  console.log(food)
+
+  const age = 23
+  console.log(age)
+
+  const test2 = () => {
+    console.log(name)
+  }
+}
+test()
+
+console.log(`NAME w funckji - ${name}`)
+
+console.log(food)
+
+
+NICE!!! do food mamy dostęp w cały programie 
+
+------------------
+
+powtórka z for each i callback
+
+const numbers = [0.5, 4, 'abc']
+
+const names = ['Lisa', 'Lily', 'Adam', 'Przemek']
+   
+numbers.forEach(num => console.log(num * num))   <- przykład funkcji strzałkowej anonimowej
+
+-------- możemy zapisać w formie callback'a
+const bigNames = names.map(name => name.toLocaleUpperCase())
+console.log(bigNames)  
+
+w metodzie odwołujemy się do jakiejś innej funkcji 
+
+callback:
+const showBigNames = (name) => {
+  console.log(name.toUpperCase())
+}
+
+names.forEach(showBigNames)
+
+---------------------
+
+
+
+
+
+
+
+
+
+
+
+

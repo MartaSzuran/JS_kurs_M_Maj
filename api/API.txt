@@ -1,0 +1,79 @@
+co to API? 
+
+to co jest dostępne dla użtkownika 
+
+DOM <- document, reprezentacja naszej str internetowej, na str -> inspekt -> wszystko co jest w elementach
+console.log(document) <- cała strona internetowa
+
+window <- to jest obiekt globalny, siedzi w nim wszystko, nawet document
+
+window.console.log('cześć')  <- wyświetli cześć, ponieważ console to też część window
+
+
+------------------
+pobieranie elementów na naszej stronie
+
+//getElementByID()
+np.:
+const test = document.getElementById('item')
+console.log(test)
+
+id <- jest unikalne, pobierze jeden element
+
+//getElementsByTagName
+const test2 = document.getElementsByTagName('ul')
+console.log(test2)
+
+zwróci element HTMLCollection
+
+//getElementsByClassName
+const test3 = document.getElementsByClassName('test')
+console.log(test3)
+
+
+-------------------------
+nowsze metody: 
+
+// querySelector (ES6)   <- przeszukuje caly dokument, gdy napotka piewsze li konczy działanie
+const test = document.querySelector('#item')
+console.log(test)
+
+//class
+const test1 = document.querySelector('.test')
+// id
+const test2 = document.querySelector('#item')
+
+//przeszukaj li które jest w ul
+const test3 = document.querySelector('ul li')
+console.log(test3)
+
+ZAPIS DOKŁADNIE TAKI SAM JAK W CSS!!
+
+// pobranie całe ul listy
+const ulList = document.querySelector('ul')
+console.log(ulList)
+
+const liItem = ulList.querySelector('li')  <- zamiast pracować na całym dokumentcie bierzemy kawałek
+console.log(liItem)
+
+// qsa i kropka <- wskakuje querySelectorAll
+const liItems = document.querySelectorAll('li')
+console.log(liItems)
+
+const liItems2 = document.querySelectorAll('li.test')  <- wybierz wszystki li z clasą test
+
+problem - nie wspierają żywych kolekcji
+
+--------------------------------
+// żywe kolekcje, czyli qSA vs getElementByTag / ClassName
+const newLi = document.createElement('li')
+ulList.appendChild(newLi).textContent = '00'  <- li dodane dynamicznie na stronę, nie będzie go w html, ale będzie w naszym DOMie
+
+console.log(liItems.length)  		<- zwróci 5 elementów, mimo, że na str mamy 6
+
+na tym polega żywa kolecja, czyli przechowuje również te elementy, które zostały dodane na naszą str dynamicznie
+
+const test1  = document.getElementsByTagName('li')
+console.log(test1.length)  		<-zwróci 6, czyli wspiera żywe kolekcje
+
+ 

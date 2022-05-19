@@ -77,3 +77,239 @@ const test1  = document.getElementsByTagName('li')
 console.log(test1.length)  		<-zwróci 6, czyli wspiera żywe kolekcje
 
  
+-------------------------------
+tworzenie dodwanie elementów
+
+const ulList = document.createElement('ul');
+const liItem = document.createElement('li');
+
+liItem.textContent = 'cześć';
+console.log(liItem)
+
+console.log(document.body)
+
+document.body.appendChild(ulList)
+
+ulList.appendChild(liItem)
+
+dodajemy elementy dynamicznie na samym końcu
+
+male zadanie: 
+const myDiv = document.querySelector('div')
+const para = document.createElement('p')
+para.textContent = 'joł joł to ja Twój paragraf'
+
+myDiv.appendChild(para)
+
+--------------------------------
+za pomocą appendChild nie możemy:
+- dodać więcej niz jednego elementu
+- nie możemy dodać tekstu
+
+APPEND
+
+myDiv.append(para, headingTwo, 'cześć')
+
+można dodać tekst, ale raczej tego nie używamy
+
+obie te metody robią to samo.
+
+--------------------------------
+textcontent, innerhtml
+
+outerHTML <- pokazuje nam np. przycisk w tagach
+
+innerHTML <- pokazuje nam tylko test przycisku
+
+btn.outerHTML = '123'  <- w miejsce przycisku wstawiliśmy tekst (czyli przycisk zniknął)
+
+btn.innerHTML = ''  <- przycisk został, ale środek jest pusty
+
+document.body.innerHTML = ''  <- wszystko ze strony zniknęło :)
+
+ze względów bezpieczeństwa możemy korzystać z innerHTMLa tylko jak my wprowadzamy w danym elementcie jakiś kod, 
+a nie użytkownik, poniważ wtedy narażamy się na ataki hakeeeróóóóów
+----
+console.log(btn.innerText)  <- wyświetlają zawartość btna 
+console.log(btn.textContent)
+
+btn.textContent = 'abcd' <- zmieniają zawartość btna
+btn.innerText = 'abcd!'
+
+lecz:
+btn.textContent = '<li>123</li>'  <- wyświetli mi na btn treść = '<li>123</li>'
+innerText działa też tak samo
+
+różnica:
+
+const innerT = document.querySelector('.inner-text')
+const textC = document.querySelector('.text-content')
+console.log(innerT.innerText)  <- zwrócił sam tekst
+: to innerText
+console.log(innerT.textContent) <- zwrócił wszystko :
+  to 
+    jest
+    p {font-size: 22px;}
+    innerText
+
+-------------------------------------------------
+
+NIE UŻYWAĆ innerHTML Z INPUTEM, TYLKO Z textContent
+
+-----------------------------------------
+usuwanie elementów
+
+removeChild()
+- odwołujemy się do rodzica
+- wpisujemy zmienną, nie taga. czyli wcześniej musimy pobrać z querySelector
+
+div.removeChild(p) < - odwołujemy się do jakiegoś rodzica i usuwamy dzieciaka
+
+document.body.removeChild(div)
+
+
+remove() <- odwołujemy się do elementu (zmiennej)
+
+p.remove()
+div.remove()
+
+
+------------------------------------------------------
+addEventListener
+
+wcześniej pobrałam elemenety.
+
+wykorzystanie w z func. anonimowymi
+btn1.addEventListener('click', function () {
+  console.log('klikniteo mnie')
+})
+
+btn2.addEventListener('mouseover', () => console.log('najechano na mnie'))
+
+
+btn3.addEventListener('click', test)  <- funkcja bez nawiasów !! 
+
+btn3.addEventListener('dblclick', test)
+
+ważne o listenerach:
+- staramy się nie używać funkcji anonimowych
+- trzymamy je na samym dole
+
+
+żeby dodać listenera na tablicę np przycisków to musimy użyć forEach:
+btns.forEach(btn => btn.addEventListener('click', test))
+
+------------------------------------------
+
+literka e = event w parametrze funckji <- wszystcy wiedzą, że e to event 
+
+const test = (e) => {
+  console.log(e)    <- bardzo bardzo dużo treści i parametrów
+}
+
+btn.addEventListener('click', test)  <- zwróci nam obiekt mouse() z jego wszystkimi info
+
+
+const test = (e) => {
+  console.log(e.target)  <- odnosimy się do elementu
+ }
+
+console.log(e.target.classList) <- pokazuje wszystkie klasy które są na tym elemence
+słowo class w js odnosi się do obietkow 
+
+console.log(e.target.offsetTop) <- odległość od góry w px
+
+-------------------------
+przechwytywanie bąbelków 
+
+addEventListener bierze elementy od dziecka do rodzica, czyli:
+  <div>
+    <div class="circle lime">
+      <div class="circle blue">
+        <div class="circle gold"></div>
+      </div>
+    </div>
+  </div>
+
+dla takiej struktury 
+gold.addEventListener('click', infoGold) wyświetli mi złoty, niebieski i limonkowy
+
+dodanie {once: true} co powoduje, że nasz listener ma się wykonać tylko raz 
+np. gold.addEventListener('click', infoGold, {once: true}) 
+
+przechwytywanie bąbelków:
+dodanie {capture: true} 
+faza capture to jest pierwsza faza wykonywania się kodu (ściskanie sprężynki od Window do najmłodzego dziecka), 
+bąbelkowanie to jest rozluźnianie sprężynki, czyli operacja odwrotna do ściskania sprężynki, od najmłodszego dziecka do
+Window
+
+np. gold.addEventListener('click', infoGold, {capture: true}) <- informujemy wykonaj kod w tym miejscu, 
+a gdy bąbelkujesz już go nie wykonuj, bo to zrobiłeś już wczęśniej
+
+---------------------
+stopPropagation
+
+gdy elementy na siebie nachodzą, aby uruchomić kod jednego z nich używamy:
+e.stopPropagation() <- propaginacja  <- po tym kodzie zatrzymujemy bąbelkowanie
+
+możemy też zmienić w cssie:
+dodać do klasy :
+pointer-events: none; <- ignorowanie wszystkich zdarzeń
+
+----------------------
+delegacja zdarzeń
+
+
+const allCircles = document.querySelectorAll('.circle')
+const gold = document.querySelector('.gold')
+const lime = document.querySelector('.lime')
+
+allCircles.forEach(circle => addEventListener('click', () => console.log(circle)))
+
+const newDiv = document.createElement('div')
+newDiv.classList.add('circle', 'purple')  <- dodanie class do diva
+gold.appendChild(newDiv)
+
+console.log(allCircles.length) 
+<- pokaże nam 3 ponieważ querySelectorAll nie widzi nowego diva
+aby z tego wyjść może zamiast sqa wykorzystać getElementsByClassName, lecz wtedy nie możemy skorzystać z 
+forEach ponieważ pracujemy na obiekcie tablicopodobnym.
+Jeżeli chcemy wykorzystać forEach musimy przenieść linijkę z qsa na dół razem z forEachem
+
+np.:
+const gold = document.querySelector('.gold')
+const lime = document.querySelector('.lime')
+
+const newDiv = document.createElement('div')
+newDiv.classList.add('circle', 'purple')
+gold.appendChild(newDiv)
+
+const allCircles = document.querySelectorAll('.circle')
+allCircles.forEach(circle => circle.addEventListener('click', () => console.log(circle)))
+console.log(allCircles.length) 
+
+
+niestety dobrą praktyką jest mieć wszystkie linijki z tworzeniem zmiennych na górze kodu, 
+zatem :
+
+lime.addEventListener('click', (e) => {
+  if(e.target.matches('.circle2')) {     <-tylko elementy z tą klasą
+  console.log('test')}
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

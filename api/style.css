@@ -1,0 +1,30 @@
+body {
+  background-color: aquamarine;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lime {
+  /* position: absolute; */
+  width: 500px;
+  height: 500px;
+  background-color: lime;
+}
+
+.blue {
+  width: 400px;
+  height: 400px;
+  background-color: royalblue;
+}
+
+.gold {
+  width: 250px;
+  height: 250px;
+  background-color: gold;
+}
+
+.purple {
+  width: 150px;
+  height: 150px;
+  background-color: purple;
+}

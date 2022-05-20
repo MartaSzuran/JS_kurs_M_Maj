@@ -102,9 +102,9 @@
 
 // delegacje zdarzeń
 
-const allCircles = document.querySelectorAll('.circle')
-const gold = document.querySelector('.gold')
-const lime = document.querySelector('.lime')
+// const allCircles = document.querySelectorAll('.circle')
+// const gold = document.querySelector('.gold')
+// const lime = document.querySelector('.lime')
 
 // allCircles.forEach(circle => circle.addEventListener('click', () => console.log(circle)))
 
@@ -119,7 +119,32 @@ const lime = document.querySelector('.lime')
 //   console.log('test')}
 // })
 
-lime.addEventListener('click', (e) => {
-  if(e.target.classList.contains('circle2')) {    
-  console.log('test')}
-})
+// lime.addEventListener('click', (e) => {
+//   if(e.target.classList.contains('circle2')) {    
+//   console.log('test')}
+// })
+
+
+//zadanie 1 
+const ulList = document.createElement('ul')
+const liItem = document.createElement('li')
+
+document.body.append(ulList)
+const number = 10
+
+for (let i = 1; i <= 10; i++) {
+  const liItem = document.createElement('li')
+  ulList.append(liItem)
+  liItem.textContent = i
+  // console.log(ulList)
+}
+
+const lastLi = ulList.querySelector('li:last-child')
+console.log(lastLi)
+
+// lastLi.textContent = 'Jestem ostatnim elementem'
+lastLi.innerHTML = 'Jestem ostatnim elementem'
+
+lastLi.style.backgraound = 'blue'
+lastLi.style.fontSize = '48px'
+lastLi.style.padding = '20 px 40px'

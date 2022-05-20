@@ -1,0 +1,46 @@
+const addBtn = document.querySelector('.add')
+const removeBtn = document.querySelector('.remove')
+const toggleBtn = document.querySelector('.toggle')    <- taki wylacznik swiatla
+							dodaje, usuwa itd
+const text = document.querySelector('p')
+
+const addClass = () => {
+  text.classList.add('test')
+}
+
+addBtn.addEventListener('click', addClass)
+
+const removeClass = () => {
+  text.classList.remove('test')
+}
+
+removeBtn.addEventListener('click', remove)
+
+const toggleClass = () => {
+  text.classList.toggle('test')
+}
+
+toggleBtn.addEventListener('click', toggle)
+
+toggle sprawdza, czy element ma juz taka klase, jak ma to ja zabiera, jak nie to ja dodaje
+
+
+
+powyzszy kod ma pomieszane listenery, ladna struktura: 
+
+const addClass = () => {
+  text.classList.add('test')
+}
+
+const removeClass = () => {
+  text.classList.remove('test')
+}
+
+const toggleClass = () => {
+  text.classList.toggle('test')
+}
+
+
+removeBtn.addEventListener('click', remove)
+addBtn.addEventListener('click', addClass)
+toggleBtn.addEventListener('click', toggle)

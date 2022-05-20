@@ -1,0 +1,175 @@
+POZOSTALE WAZNE METODY
+
+
+setTimeout(test, 1000)  <- pierwszy argument jaka funkcja, drugi czas w milisekundach
+
+setInterval(test, 1000)
+
+------------
+'use strict'   <- dodaje sie na gorze kodu zeby pilnowalo naszej skladni, poniewaz js duzo
+		wybacza
+
+const colors = ['red', 'green', 'blue']
+
+for(const color of colors) {      <- w for of trzeba deklarowac zmienna z const lub let
+  console.log(color)
+}
+
+bez use strict przejdzie:
+
+for (color in colors)  :) 
+
+-----------------------
+alert('czesc')
+
+
+confrim <- pokazuje zapytanie czy na pewno co chcemu
+
+if (confirm('Chcesz cos powowiedziec ?')) {   
+  console.log('tak')
+} else {
+  console.log('nie')
+}
+
+
+const name1 = prompt('Czesc, jak masz na imie?')
+console.log(name1)
+
+-------------------------------
+obiekt math
+
+console.log(Math)
+console.log(Math.E)
+console.log(Math.PI)
+console.log(Math.max(5, 10))
+console.log(Math.min(5, 10))
+
+
+console.log(Math.random())  <- takie wywolanie losuje z przedzialu 0-1
+console.log(Math.random()*10) <- losuje z przedzialu 0-10
+
+aby miec liczbe calkowita:
+console.log(Math.floor(number))
+
+-----------------------------
+atrybuty  - jak z nimi pracowac
+
+setAttribute <- nie sprawdza poprawnosci danych tylko je wstawia do jakiego tagu chce
+link.setAttribute('href', '#')
+link.setAttribute('target', '_blank')   
+
+nasz plik html sie nie zmienia
+
+
+console.log(img.getAttribute('alt')) <- pobiera wartosc przypisana do danego atrybutu
+
+
+console.log(p.hasAttribute('src'))   <- czy nasz element ma atrybut src, jak tak True jak nie False
+
+p.removeAttribute('style')    	     <- usuniecie danego atybutu
+
+--------------------------------
+data-atrybuty  <- bardzo potezne narzedzie 
+
+pozwala nam pozbyc sie ID
+
+<img src="" alt="">    <-zwykly atrybut
+<div data-number="'23" data-more-info="to jest tekst"></div>  <- data atrybuty
+
+
+const div = document.querySelector('div')
+console.log(div)
+
+const div1 = document.querySelector('[data-number="23"]')   
+console.log(div1)
+
+console.log(div1.dataset)  <- zwrocil nam obiekt!!!
+console.log(div1.dataset.number)   <- zwroci nam 23
+console.log(div1.dataset.moreInfo) <- zwroci nam wartosc atrybutu more info
+
+div1.dataset.color = 'blue'  <- stworzylismy data-atrybut o nazwie color z wartoscia blue
+
+
+mozna pracowac ze wczesniejszymi metodami:
+
+div1.setAttribute('data-test', '123')
+console.log(div1.dataset)
+DOMStringMap(3) { number → "23", moreInfo → "to jest tekst", test → "123" }
+
+---------------------------
+relacje rodzinne
+
+pobieramy najstarszego, a pozniej za pomoca qs mozemy pobrac dzieciaki
+
+const grandpa = document.querySelector('.grandparent')
+console.log(grandpa.querySelector('.parent'))
+console.log(grandpa.querySelectorAll('.child'))
+
+
+mamy rownorzedne paragrafy w html:
+<p class="child">1</p>
+<p class="child middle-child">2</p>
+<p class="child">3</p>
+
+const middleChild = document.querySelector('.middle-child')
+
+pobieramy srednie dziecko, aby dostac sie do poprzedniego wybieramy :
+previousElementSibling
+
+const prevSibling = middleChild.previousElementSibling
+console.log(prevSibling)
+
+a do poxniejszego dziecka: 
+
+const nextSibling = middleChild.nextElementSibling
+console.log(nextSibling)
+
+z dziecka do rodzica:
+
+const parentEl = middleChild.parentElement
+console.log(parentEl)
+
+const grandEl = middleChild.parentElement.parentElement   <- bezsensowne zagniezdzanie
+								(nigdy nie wiadomo ktory sluzy do czego)
+
+console.log(grandEl)
+
+inna metoda odwolania sie do starszego taga:
+wykorzystanie closest 
+
+console.log(middleChild.closest('p'))
+console.log(middleChild.closest('div'))
+console.log(middleChild.closest('.grandparent'))
+
+
+---------------------
+dalczego nie uzywa sie id:
+
+- kazde id uzyte w html js traktuje jako zmienna
+- zapychamy pamiec przegladarki
+
+--------------------
+konsola
+
+console.log(window.console) <- zwaraca obiekt z narzedziami pomocnymi min w debagowaniu 
+
+console.warn('warning')
+console.error('errooooorrr')
+
+console.table(['123', 123])
+
+const persons = [
+  {
+    name: 'Lisa',
+    age: 23
+  },
+  {
+    name: 'Majek',
+    age: undefined
+  }
+]
+
+console.table(persons)   <- bardzo fajna tabelka, w której name to nazwa kolumny
+
+
+

@@ -60,7 +60,7 @@ console.log(liItem)
 const liItems = document.querySelectorAll('li')
 console.log(liItems)
 
-const liItems2 = document.querySelectorAll('li.test')  <- wybierz wszystki li z clasą test
+const liItems2 = document.querySelectorAll('li.test')  <- wybierz wszystkie li z clasą test
 
 problem - nie wspierają żywych kolekcji
 

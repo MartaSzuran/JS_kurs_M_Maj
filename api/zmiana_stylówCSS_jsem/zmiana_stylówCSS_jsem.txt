@@ -1,0 +1,16 @@
+zmaina stylów:
+
+const div = document.querySelector('div')  <- pobieram element
+
+div.style.fontSize = '48'		<- wprowadzam zmiany, jak są dwa słowa to stosujemy camelcase
+div.style.background = 'tomato'
+div.style.padding = '20px 40px'		<- to są style liniowe
+div.style.borderRadius = '8px'
+
+
+nie powinno się stylować w jsie, bo od tego jest css
+
+żeby odwołać się poprzez js do stylu w css
+, aby wystylizować interesujący nas element:
+
+div.classList.add('nazwa clasy')  <- i element będzie mial tą klasę

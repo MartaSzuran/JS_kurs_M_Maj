@@ -214,7 +214,7 @@ const test = (e) => {
   console.log(e.target)  <- odnosimy się do elementu
  }
 
-console.log(e.target.classList) <- pokazuje wszystkie klasy które są na tym elemence
+console.log(e.target.classList) <- pokazuje wszystkie klasy które są na tym elemencie
 słowo class w js odnosi się do obietkow 
 
 console.log(e.target.offsetTop) <- odległość od góry w px
@@ -258,7 +258,6 @@ pointer-events: none; <- ignorowanie wszystkich zdarzeń
 
 ----------------------
 delegacja zdarzeń
-
 
 const allCircles = document.querySelectorAll('.circle')
 const gold = document.querySelector('.gold')

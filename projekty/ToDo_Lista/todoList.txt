@@ -1,0 +1,39 @@
+
+pokazuje się okienko na dole i znika dzięki zmianie stylu:
+display: none != display:flex
+
+
+document.addEventListener('DOMContentLoaded', main)  <- odpowiada za wczytanie strony
+scripty nie uruchomią się zanim cała stronka się nie załaduje
+
+
+tc <- skrót textcontent
+
+const toolsPanel = document.createElement('div') 
+  toolsPanel.classList.add('tools') 
+  newTodo.append(toolsPanel)
+
+pamiętaj najpierw tworzysz w documencie, później dodajesz
+
+w środku przycisku, gdy mam takie coś : '<i class="fas fa-check"></i>'
+btnComplete.innerHTML = '<i class="fas fa-check"></i>'  <- nie mogę używać textcontent bo mi tego nie wykryje !
+
+toolsPanel.append(btnComplete, btnEdit, btnDelete)  <- kolejność ma znaczenie :D 
+
+class="popup-btn accept"  <- zeby sie odniesc do takiej klasy 
+qs('.accept')
+
+
+<li data-id='test3'>Umyć okna  
+
+pierwszym dzieckiem naszego li jest tekst: #text "Umyć okna\n    
+zeby byl zwyklym tekstem musimy jeszcze dodac na koniec text content
+
+popupInput.value = todoToEdit.firstChild.textContent <- i w inpucie mamy odpowiedni tekst
+
+keyboard event <- zeby zlapac entery
+
+
+
+
+

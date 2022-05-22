@@ -1,0 +1,29 @@
+RegEx
+
+wyrażenia regularne - są wykorzystywane we wszystkich językach programowanie, 
+			a nawet excel'u
+
+bardzo obszerny temat
+
+walidator adresu mailowego:
+/^[0-9a-z_.-]+@[0-9a-z.-]+\.[a-z]{2,3}$/i
+
+
+/^   		<- rozpoczęcie zapisu wyrażenia 
+[0-9a-z_.-] 	<- dozwolone liczby od 0 do 9, litery od a do z, i znaki '_', '.', '-'
++@ 		<- plus małpka 
+[0-9a-z.-]	<- dozwolone liczby od 0 do 9, litery od a do z, i znaki '.', '-'
++\. 		<- plus kropka
+[a-z]		<- dozwolone litery od a do z
+{2,3}		<- nie więcej niż dwa trzy znaki
+$/		<- koniec wyrażenia
+i 		<- flaga - pozwala nam pominąć casesensitivity <- jakby jej nie bylo dozwolone bylyby tylko małe znaki
+
+
+na necie jest mnóstwo gotowych wzorów i różnych generatorów :) 
+
+const letters = /[a-z]/i;    <- to jest deklaracja wyrażenie regularnego
+
+pass.value.match(letters)  <- porównywanie wartości, idealna do pracy z wyrażeniami warunkowymi
+
+p.style.color = ''  <- zerowanie coloru

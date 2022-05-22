@@ -1,0 +1,268 @@
+OOP
+
+const myObject = {
+  key: value,
+  key: value,
+  key: value
+}
+
+const newUser = {
+  name: 'Lisa',
+  age: 23,
+  car: {			<-możemy mieć obiekty w obiektach
+    brand: 'Audio',
+    model: 'A3',
+    color: 'czarny'
+  }
+}
+
+console.log(newUser.car.color) <- dostęp
+
+--------------------------
+metody w obiektach
+
+const newUser = {
+  name: 'Lisa',
+  age: 23,
+  car: {
+    brand: 'Audio',
+    model: 'A3',
+    color: 'czarny',
+    sound: function () {
+      console.log('brum brum')
+    }
+  }
+}
+
+newUser.car.sound()
+
+zapis z funkcją strzałkową:
+sound: () => {
+      console.log('brum brum')
+    }
+
+najnowszy zapis:
+sound() {
+      console.log('brum brum')
+    }
+-----------------
+dodawanie rzeczy do obiektów
+
+user.country = 'Polska'
+
+user.fav-color <- wyrzuci błąd bo to odejmowanie
+ważne przy datach, można to inacze zapisać:
+
+user['fav-color'] = 'niebieski'
+
+lub bezpośrednio w obiekcie : 
+
+const user = {
+  name: 'Lisa',
+  age: 23,
+  'fav-color': 'czerwony'
+}
+
+----
+można przypisać wartość:
+
+const dogName = 'Drops'
+const dogAge = 5
+
+const dog = {
+  name: dogName,
+  age: dogAge
+}
+
+console.log(dog)
+
+w nowym js jak mamy taką samą nazwę klucza i wartości np.:
+dogName: dogName,
+dogAge: dogAge
+
+możemy to zapisać po prostu:
+dogName,
+dogAge
+
+-------------
+pętla for in  <- używana na obiektach
+
+pobierze same klucze:
+for(const data in user) {  
+  console.log(data)
+} 
+
+pobierze wartości:
+for(const data in user) {
+  console.log(user[data])
+}
+
+----------------------
+THIS
+
+const user = {
+  name: 'jerzy',
+  print() {
+    console.log(user.name)
+  }
+}
+
+
+const user = {
+  name: 'jerzy',
+  print() {
+    console.log(this.name)   <- gdyby zmianiła się np. nazwa obiektu to i tak funkcja pracuje
+  }
+}
+
+console.log(this) <- zwraca obiekt w którym się znajdujemy
+
+---------------------------
+konstruktor   <- funckja do tworzenia obiektów
+
+function User  <- konstruktor nazwa z dużej
+
+function User (name, age) {
+  this.name = name, 
+  this.age = age
+
+  this.hello = function() {
+    console.log(`Cześć ${this.name}`)
+}
+
+const newUser = new User('Jarek', 33)  <- słówko kluczowe new!!
+
+obecnie zamiast konstruktora używa się class
+
+-----------------------------
+prototyp  
+
+tworząc trzy takie same obiekty:
+const newUser = new User('Jarek', 33)
+const newUser1 = new User('Kamil', 28)
+const newUser2 = new User('Wojtek', 35)
+
+jak je rozwinę w consoli okazuje się, że stworzyłam 3 razy uniwersalną funkcję hello, 
+zatem teraz z pomocą wchodzi PROTOTYP:
+
+User.prototype.hello = function() {
+  console.log(`Cześć ${this.name}`)
+}
+
+w consoli jak rozwiniemy dane naszego obiektu to jest taka informacja: 
+[[Prototype]] <- tam właśnie jest nasza funkcja
+
+wszystkie obiekty dziedziczą prototyp swojego konstruktora :) 
+
+User.prototype.country = 'Polska'
+console.log(newUser.country )
+
+-----------------
+Food.prototype.foodInfo = function () {
+  console.log(`${this.foodName} kosztuje ${this.price}`)
+}
+
+btn1.addEventListener('click', firstFood.foodInfo)  <- this teraz wskazuje na button
+							mogę to sprawdzić console.log(this)
+
+trzeba to wywołać w jakiejkolwiek funkcji
+btn1.addEventListener('click', () => firstFood.foodInfo())
+
+----------------------------
+this cz.1
+
+console.log(this)  <- Window file:///C:/Users/Marta/Desktop/GIT/JS_kurs_M_Maj/obiekty/index.html
+wskazuje na nasz dokument, dom, nic powyzej nie ma
+
+nawet teraz wciąż wspazuje na Window:
+function test() {
+  console.log(this)
+}
+
+test()
+
+this w zwykłej funkcji bedzie wskazywał na obiekt, który jest po lewej stronie od kropki:
+const person = {
+  name: 'Lisa',
+  'fav-meal': 'schabowy',
+  showInfo () {
+    console.log(this)
+    console.log(this["fav-meal"])
+  }
+}
+
+person.showInfo()   <- person.  <- obiekt po lewej stronie od kropki
+
+
+this w konstruktorze wskazuje na obiekt, stworzony na podstawie tego konstruktora
+const meal1 = new Food('jabłko')  <- this wskazuje na meal1
+
+---------------------------
+this cz.2
+
+const btns = document.querySelectorAll('button')
+
+btns.forEach(btn => btn.addEventListener('click', function() {
+  console.log(this)  		<- dostaniemy się do buttona z eventem
+  console.log(this.textContent)   <- dstaniemy się do cyferki 
+}))
+
+
+
+w tym przypadku w consoli pokazuja to samo, 
+lecz gdy zmienimy zwykla funkcje na funkcje strzalkowa
+
+btns.forEach(btn => btn.addEventListener('click', function(e) {
+  // console.log(this.textContent)
+  console.log(this)		
+  console.log('------')
+  console.log(e.target)
+}))
+
+
+btns.forEach(btn => btn.addEventListener('click', (e) => {
+  // console.log(this.textContent)
+  console.log(this)		
+  console.log('------')
+  console.log(e.target)
+}))
+
+this sie popsuł, a e.target zawsze będzie nam wskazywał co trzeba :) 
+
+znów this.number z showNumber z funckją strzalkową będzie undefinde
+const ob = {
+  number: 123,
+  showNumber () {
+    console.log(this.number)
+  },
+  showNumber2: () => {
+    console.log(this.number)
+  }
+}
+
+czy jest na to jakiś sposób ?? 
+można to tak obejść:
+
+const ob = {
+  number: 123,
+  showNumber1() {
+    console.log(this.number)
+  },
+  showNumber2() {
+    const test = () => {
+      console.log(this.number)
+    }
+    test()
+  }
+}
+
+ob.showNumber1()
+ob.showNumber2()
+
+tzn. opakować funkcję strzałkową w funkcji
+
+-------------------------------
+
+
+
+

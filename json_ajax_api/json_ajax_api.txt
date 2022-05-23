@@ -1,0 +1,305 @@
+wszystkie darmowe API:
+https://github.com/public-apis/public-apis/blob/master/README.md
+
+niektore API potrzebują klucze, działa to tak, że my wysyłamy zapytania na ich servery
+klucze są po to, aby nie było miliona wysyłanych zapytań (kontrola nad udostępnieniami, 
+oraz, że jesteśmy człowiekiem)
+
+rozpoczęcie pracy z API:
+- czytanie dokumentacji
+- kopiuje podany na stronce API link i zapisuje do pliku js:
+
+const URL = 'https://dog.ceo/api/breeds/image/random'  
+<- nazwa duże litery, bo jest to stała, 
+ktora nigdy się nie zmieni, dodatkowo jej zmiana mogłaby negatywnie wpłynąć na 
+całość działania aplikacji, zapisujemy nazwę dużymi literami
+
+przykład const APIKEY
+
+standardowy zapis fetch'a:
+fetch().then().catch()
+fetch() <- pobiera dane
+then()  <- co zrobimy z danymi gdy zostaną poprawnie pobrane
+catch() <- wypłapywanie blędów
+
+tak się zapisuje:   PAMIĘTAĆ O BRAKU ŚREDNIKA
+fetch(URL)
+    .then()
+    .then()
+    .then()
+    .then()
+    .catch(err => console.log(err))
+
+
+fetch(URL)
+    .then(res => console.log(res))    <- lapie odpowiedź :) 
+    .catch(err => console.log(err)) 
+
+żebysmy mogli pracować z api, musimy przerobić res na json
+
+fetch(URL)
+    .then(res => res.json())
+    .then(data => console.log(data))   <- zwraca obiekt
+    .catch(err => console.log(err))
+
+JSON ze stronki o psach:
+
+JSON  <- poprawnie otrzymany
+
+{
+    "message": "https://images.dog.ceo/breeds/mountain-bernese/n02107683_6151.jpg",
+    "status": "success"
+}
+
+WOW
+btn.addEventListener('click', () => {
+  fetch(URL)
+    .then(res => res.json())
+    .then(data => img.setAttribute('src', data.message))
+    .catch(err => console.log(err))
+})
+
+----------------------------
+statusy
+
+http.cat < - same kody błędow hahahah :D 
+
+--------------------------
+AJAX: 
+- asynchronous JS and XML (przechuje tylko i wyłącznie dane)
+- wysyłanie i pobieranie danych bez konieczności przeładowania strony
+
+JSON:
+- podobny do obiektu, 
+- reprezentuje dane i tylko dane, nie może przyjąć np.funkcji,
+- "", <- musi byc tak zapisany
+- ''  <- to nam nie zadziała
+- ostatnia właściwośc bez przecinka!
+- rozszerzenie .json
+
+same podwojne cudzysłowia na stringach
+{
+  "name": "Klaudia", 
+  "age": 23, 
+  "car": "Audi"    <- nie ma przecinka
+}
+
+----------------------
+synchroniczność vs asynchroniczność
+
+JS - jest językiem jednowątkowym, jest językiem synchronicznym (wykonujemy jedną rzecz po drugiej)
+
+btn.addEventListener('click', () => {
+  console.log('wykonuję się pierwszy')
+  const p = document.createElement('p')
+  alert('stowrzyłem paragraf!')       <- zawiesza nam całą stronę
+  p.textContent = 'test'
+  document.body.append(p)
+  console.log('koniec')
+})
+
+nie blokujemy wykonywanie sie programu w miejscu setT
+kod asynchroniczny nie blokuje innych funkcji
+ważne w pracy z pobieraniem danych z servera:
+
+przykład kodu asynchronicznego:
+
+console.log(1)
+setTimeout(() => {
+  console.log(2)
+}, 800)
+console.log(3)
+
+1. napierw wypisuje sie 1
+2. wypiuje się 3
+3. czekamy 800 wypisuje sie jako ostania 2
+
+----------------------
+promisy  
+
+obietnica, że chcemy wykonwać jakiś kod, ale nie wiemy ile ten kod nam zajmie, 
+czy kilka sek czy kilkanaście
+
+callback hell :   kod, który bardzo źle się czyta
+
+setTimeout(() => {
+  console.log(1)
+  setTimeout(() => {
+    console.log(2)
+    setTimeout(() => {
+      console.log(3)
+      setTimeout(() => {
+        console.log(4)
+        setTimeout(() => {
+          console.log(5)
+        }, 300)
+      }, 300)
+    }, 300)
+  }, 300)
+}, 300) 
+
+tak tworzymy Promise:
+
+const test = new Promise((resolve, reject))
+resolve i reject to są standardowe parametry
+
+const test = new Promise((resolve, reject) => {
+  if(!true) {
+    resolve('jest ok')
+  } else {
+    reject('błąd')
+  }
+})
+    
+test
+  .then(info => console.log(info))
+  .catch(err => console.log(err))
+
+---------------------------
+GET, POST, PUT, PATCH
+
+GET - pobiera dane
+POST - wysyła dane
+put, patch - edycja danych
+delete - usuwa dane
+
+CORS - cross-origin resource sharing
+zabezpieczenia, aby ktoś za pomocą js nie niszczył nam zawartości
+
+------------------------
+async & await
+
+const chackAge = age => {
+  return new Promise((resolve, reject) => {
+    if (age >= 18) {
+      resolve()
+    } else {
+      reject()
+    }
+  })
+}
+
+const doubleCheck = () => {
+  return new Promise(resolve => {
+    console.log('Sprawdzam jeszcze raz ...')
+    
+    resolve('Faktycznie, wiek się zgadza')
+  })
+}
+
+dodanie opóźnienia do resolve'a:
+
+const doubleCheck = () => {
+  return new Promise(resolve => {
+    console.log('Sprawdzam jeszcze raz ...')
+    setTimeout(() => {
+      resolve('Faktycznie, wiek się zgadza')
+    }, 1000)
+  })
+}
+
+bardzo dziwny kod: 
+checkAge(50)
+  .then(() => {
+    console.log('Chyba możesz wejść')
+    return doubleCheck()
+  })
+  .then(res => console.log(res))
+  .then(() => {
+    console.log('Weryfikacja zakończona')
+  })
+  .catch(error => console.log(error))
+
+
+zapis z async :
+
+async function test() {   <- słówko async na począktu
+  await checkAge(22)		<- poczekaj, aż wykona się ta promisa
+}
+
+async function test() {
+  await checkAge(22)
+  console.log('Chyba możesz wejść')
+  await doubleCheck()
+  console.log(('Faktycznie, wiek się zgadza'));
+  console.log('Weryfikacja zakończona')
+}
+
+test()
+
+zapisaliśmy funkcję asynchroniczną jak synchroniczną
+
+
+z catch:
+
+async function test() {
+  try {
+    await checkAge(15)
+    console.log('Chyba możesz wejść')
+    await doubleCheck()
+    console.log(('Faktycznie, wiek się zgadza'));
+    console.log('Weryfikacja zakończona')
+  } catch {
+    console.log('Bląd, masz za mało lat.');
+  }
+}
+
+test()
+
+-------------------------------
+przykład uzycia obu sposobów :
+
+const URL = 'https://dog.ceo/api/breeds/image/random'
+
+fetch(URL)
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(error => console.log(error))
+
+async function test () {
+  try {
+    const res = await fetch(URL)
+    const data = await res.json()
+
+    console.log(data)
+  } catch {
+    console.error('ups, blądeł')
+  }
+}
+
+test()
+
+
+---------------------------
+axios -  to uproszczony fetch
+
+rodzaj pobierania danych z api
+https://github.com/axios/axios
+
+axios.get
+axios.post
+
+w przypadku axiosa, dostajemy inny obiekt, z którym od razu możemy pracować
+
+const img1 = document.querySelector('.one')
+const img2 = document.querySelector('.two')
+const img3 = document.querySelector('.three')
+
+const URL = 'https://dog.ceo/api/breeds/image/random'
+
+fetch(URL)
+  .then(res => res.json())
+  .then(res => img1.setAttribute('src', res.message))
+
+axios.get(URL).then(res => {
+  img2.setAttribute('src', res.data.message)
+})
+
+async function showImg() {
+  const res = await axios.get(URL)
+  img3.setAttribute('src', res.data.message)
+}
+
+showImg()
+
+

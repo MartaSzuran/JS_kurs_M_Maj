@@ -207,9 +207,7 @@ btns.forEach(btn => btn.addEventListener('click', function() {
   console.log(this.textContent)   <- dstaniemy się do cyferki 
 }))
 
-
-
-w tym przypadku w consoli pokazuja to samo, 
+w tym przypadku w consoli pokazuje sie to samo, 
 lecz gdy zmienimy zwykla funkcje na funkcje strzalkowa
 
 btns.forEach(btn => btn.addEventListener('click', function(e) {
@@ -262,7 +260,243 @@ ob.showNumber2()
 tzn. opakować funkcję strzałkową w funkcji
 
 -------------------------------
+bind
+
+function test() {
+  console.log(this)
+  console.log(this.name)
+}
+
+const car1 = {
+  name: 'Audi',
+}
+
+const car2 = {
+  name: 'Dodge',
+}
+
+const car3 = {
+  name: 'Nissan',
+}
 
 
+test.bind(car1)()    <- bind pozwala nam podstawić obiekt pod this w funkcji, 
+			pierwsze nawiasy wywołują bind z argumentem (nazwą obiektu)
+			drugie nawiasy wywołują funkcję tym wypadku test
 
+--------------------------------
+call & apply
+
+const movie = { 
+  title: 'Avengers',
+}
+
+function showMovie(price, cinema) {
+  console.log(`Film ${this.title}, cena: ${price}, kino: ${cinema}`)
+}
+
+showMovie(30, 'superkino')    <- this odnosi się w tym wypadku do window !!!
+
+showMovie.call(movie, 35, 'superkino2')
+
+showMovie.apply(movie, [35, 'superkino3'])
+
+---------------------------------------------
+klasy
+
+function Person(name, age) {
+  this.name = name,
+  this.age = age
+}
+
+Person.prototype.sayHi = function () {
+  console.log(`cześć, jestem ${this.name}`)
+}
+
+Person.prototype.showAge = function () {
+  console.log(`mam ${this.age} lat`)
+}
+
+const person1 = new Person('janusz', 55)
+console.log(person1)
+
+
+person1.sayHi()
+person1.showAge()
+
+// -------
+
+class Person2 {
+  constructor(name, age) {
+    this.name = name,
+    this.age = age
+  }
+
+  sayHi(){
+    console.log(`cześć, jestem ${this.name}`)
+  }
+
+  showAge = function() {
+    console.log(`mam ${this.age} lat`)
+  }
+}
+
+const person2 = new Person2('darek', 65)
+person2.sayHi()
+
+-------------------------------------------
+extends & super
+
+class Animal {
+  constructor(name) {
+    this.name = name
+  }
+
+  sound() {
+    console.log('Zwierzak robie "hau hau".');
+  }
+}
+
+class Dog extends Animal {}  <- klasa dzieciczy name i sound
+  
+class Dog extends Animal {	<- extends
+  constructor(name, age) {
+    super(name),		<- super
+    this.age = age
+  }
+}
+
+
+class Cat extends Animal {
+  constructor(name) {		<- możemy zapisać również bez tego konstruktora ponieważ name i tak odziedziczy
+    super(name)
+  }
+
+  sound() {			<- żeby napisać inną metodę, wystarczy nadpisać jej nazwę
+    console.log('miau');
+  }
+}
+
+-------------------------------------------
+object assign
+
+const user = {
+  name: 'Lily',
+  age: 23
+}
+
+const pet = {
+  name: "drops",
+  type: 'dog'
+}
+
+const userInfo = Object.assign(user, pet)   <- pet nadpisuje user i userInfo ma też wszystkie informacje
+console.log(pet);
+
+console.log(userInfo);
+console.log(user);
+
+const test = {
+  name: 'test'
+}
+
+const userInfo = Object.assign(user, pet, test) <- test podmienia mi name w obu poprzednich obiektach (po lewej) 
+
+JAK TO NAPRAWIĆ ?? ważne
+na początku w metodzie assign wstawiamy pusty obiekt
+
+const userInfo = Object.assign({}, user, pet)  <- oba obiekty są nienaruszone
+						userInfo ma informacje z obu (name wciąż jest nadpisane)
+
+
+kopiowanie obiektów :
+const userCopy = Object.assign({}, user)
+console.log(userCopy);
+
+userCopy.age = 55  <- możemy zmienić wartości jego atrybutów
+
+-------------------------
+destrukturyzacja obiektów
+
+możemy korzystać na tablicach i obiektach
+
+
+const person = {
+  name: 'Lily',
+  age: 23,
+  job: 'DJ',
+}
+
+kod do destrukturyzacji:
+
+const showInfo = () => {
+  console.log(`${person.name} pracuje jako ${person.job} i ma ${person.age} lat.`);
+}
+
+po destrukturyzacji:
+
+const showInfo = () => {
+
+  const {name, age, job} = person   <- kolejność jest dowolna, musza być nazwy kluczy, ktore są w obiekcie
+  //można też zrobić to tak
+  // const name = person.name
+
+  console.log(`${name} pracuje jako ${job} i ma ${age} lat.`);
+}
+
+jeżeoi chcemy zmienić nazwy kluczy:
+const {name: firstName, age, job} = person
+console.log(`firstName, pracuje jako ${job} i ma ${age} lat.`);
+
+
+bardziej skomplikowane:
+podaję nazwy kluczy jako parametry, a gdy wywołuję funkcję podaję nazwę obiektu
+
+const showInfo = ({name, age, job}) => {
+  console.log(`${name} pracuje jako ${job} i ma ${age} lat.`);
+}
+
+showInfo(person)
+
+-----
+dodajemy do obiektu obiekt :
+const person = {
+  name: 'Lily',
+  age: 23,
+  job: 'DJ',
+  car: {
+    brand: 'Dodge',
+    model: 'Viper'
+  }
+}
+
+aby się dostać do jest atrybutów to musimy w parametrach podać nazwę w klamrach, a póżniej w kolejnych klamrach nazwy kluczy
+const showInfo2 = ({car:{brand, model}}) => {
+  console.log(`Jej samochód to ${brand} ${model}.`);
+}
+
+------
+łatwiejsza 2
+
+const showInfo3 = () => {
+
+  const {car:{brand, model}} = person
+
+  console.log(`Jej samochód to ${brand} ${model}.`);
+}
+
+-----------------------------
+destrukturyzacja tablic
+const colors = ['red', 'green', 'blue']
+
+const firstColor = colors[0]
+const secondColor = colors[1]
+
+const [first, second] = colors
+
+console.log(firstColor, secondColor);
+console.log(first, second);
+
+const [,,third] = colors  <- aby się dostać do ostaniego elementu na tablicy podstawimamy ,
+console.log(third);
 
